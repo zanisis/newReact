@@ -1,0 +1,16 @@
+{
+  "password": [
+    {
+      "id": 1,
+      "url": "url",
+      "username": "username",
+      "password": "password"
+    },
+    {
+      "id": 2,
+      "url": "asdasd",
+      "username": "asdasd",
+      "password": "asdasd"
+    }
+  ]
+}
