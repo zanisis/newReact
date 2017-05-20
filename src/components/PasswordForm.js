@@ -1,5 +1,9 @@
 import React from 'react'
 import axios from 'axios'
+import {connect} from 'react-redux'
+
+import {addPassword} from '../actions/passwordAction'
+
 
 class PasswordForms extends React.Component {
   constructor(props){
@@ -18,7 +22,7 @@ class PasswordForms extends React.Component {
   }
 
   componentDidMount(){
-    console.log('saya sudah datang');
+    //
   }
 
   handleChange(e){
@@ -33,24 +37,24 @@ class PasswordForms extends React.Component {
 
   postPassword(){
     let { form } = this.state
-    let { data } = this.props
+    let { passwords } = this.props
     let newPassword = {
-      id : data[data.length-1].id + 1,
+      id : passwords.length ? passwords[passwords.length-1].id + 1:1,
       ...form
     }
+    this.props.addPassword(newPassword)
     console.log('---',newPassword);
-    axios.post('http://localhost:4000/password',
-    newPassword)
-    .then(response =>{
-      console.log(response.data);
-      this.props.onPostPassword(response.data)
-    }).catch(err =>{
-      console.log(err);
-    })
+    // axios.post('http://localhost:4000/password',
+    // newPassword)
+    // .then(response =>{
+    //   console.log(response.data);
+    //   this.props.onPostPassword(response.data)
+    // }).catch(err =>{
+    //   console.log(err);
+    // })
   }
 
   render() {
-    console.log('sata lagi datang');
     return (
       <div>
         <form>
@@ -98,5 +102,12 @@ class PasswordForms extends React.Component {
   }
 }
 
+const mapStateToProps = state => ({
+  passwords : state
+})
 
-export default PasswordForms
+const mapDispatchToProps = dispatch => ({
+  addPassword : data => dispatch(addPassword(data))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(PasswordForms)

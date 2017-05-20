@@ -3,7 +3,7 @@ const addPassword = (state, payload) => {
   return newState
 }
 
-const passwordReducer = (state, action)=>{
+const passwordReducer = (state=[], action)=>{
   switch (action.type) {
     case 'ADD_PASSWORD': return addPassword(state, action.payload)
     default: return state

@@ -4,7 +4,6 @@ import axios from 'axios'
 
 import './App.css';
 
-import {addPassword} from './actions/passwordAction'
 import PasswordForms from './components/PasswordForm'
 import PasswordList from './components/PasswordList'
 
@@ -29,11 +28,11 @@ class App extends Component {
   }
 
   onPostPassword(newData){
-    let { data } = this.state
-    let newState = {
-      data : [...data, newData]
-    }
-    this.setState(newState)
+    // let { data } = this.state
+    // let newState = {
+    //   data : [...data, newData]
+    // }
+    // this.setState(newState)
   }
 
   deletePassword(id){
@@ -52,14 +51,11 @@ class App extends Component {
   render() {
     return (
       <div >
-          <PasswordForms
-            data={this.state.data}
-            onPostPassword={this.onPostPassword}/>
+          <PasswordForms />
           <br/>
           <PasswordList
-            data={this.state.data}
+            data={this.props.passwords}
             deletePassword={this.deletePassword.bind(this)}/>
-            {JSON.stringify(this.props.passwords)}
       </div>
     );
   }
@@ -68,9 +64,10 @@ class App extends Component {
 const mapStateToProps = state => ({
   passwords : state
 })
-const mapDispatchToProps = dispatch => ({
-  addPassword : data => dispatch(addPassword(data))
-})
+// const mapDispatchToProps = dispatch => ({
+//   addPassword : data => dispatch(addPassword(data))
+// })
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
-// export default connect(mapStateToProps, null)(App); ini awal sebelum dispatchToprops
+// export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, null)(App);
+// ini awal sebelum dispatchToprops
