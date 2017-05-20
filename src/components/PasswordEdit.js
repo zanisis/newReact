@@ -2,17 +2,17 @@ import React from 'react'
 import axios from 'axios'
 import {connect} from 'react-redux'
 
-import {addPassword} from '../actions/passwordAction'
+import {editPassword} from '../actions/passwordAction'
 
 
-class PasswordForms extends React.Component {
+class PasswordEdit extends React.Component {
   constructor(props){
     super(props)
     this.state = {
       form : {
-        url:'',
-        username:'',
-        password:''
+              url : '',
+              username : '',
+              password : '',
       }
     }
   }
@@ -35,25 +35,6 @@ class PasswordForms extends React.Component {
     this.setState(newState)
   }
 
-  postPassword(){
-    let { form } = this.state
-    let { passwords } = this.props
-    let newPassword = {
-      id : passwords.length ? passwords[passwords.length-1].id + 1:1,
-      ...form
-    }
-    this.props.addPassword(newPassword)
-    console.log('---',newPassword);
-    // axios.post('http://localhost:4000/password',
-    // newPassword)
-    // .then(response =>{
-    //   console.log(response.data);
-    //   this.props.onPostPassword(response.data)
-    // }).catch(err =>{
-    //   console.log(err);
-    // })
-  }
-
   render() {
     return (
       <div>
@@ -64,6 +45,7 @@ class PasswordForms extends React.Component {
           <input
           name="url"
           type="text"
+          value={this.props.url}
           onChange={this.handleChange.bind(this)} /><br />
           <label>
           {this.state.url}
@@ -75,6 +57,7 @@ class PasswordForms extends React.Component {
           <input
           name="username"
           type="text"
+          value={this.props.username}
           onChange={this.handleChange.bind(this)} /><br />
           <label>
           {this.state.username}
@@ -86,6 +69,7 @@ class PasswordForms extends React.Component {
           <input
           name="password"
           type="password"
+          value={this.props.password}
           onChange={this.handleChange.bind(this)} /><br />
           <label>
           {this.state.password}
@@ -93,8 +77,13 @@ class PasswordForms extends React.Component {
           <br />
           <button
           type='button'
-          onClick={()=> this.postPassword()}>
-            Save
+          onClick={()=>{
+            let {id, url, username, password } =this.props
+            this.props.editPassword({
+              id, url, username, password
+            })
+          }}>
+            Update
           </button>
         </form>
       </div>
@@ -102,12 +91,8 @@ class PasswordForms extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  passwords : state
-})
-
 const mapDispatchToProps = dispatch => ({
-  addPassword : data => dispatch(addPassword(data))
+  editPassword : data => dispatch(editPassword(data))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(PasswordForms)
+export default connect(null, mapDispatchToProps)(PasswordEdit)
